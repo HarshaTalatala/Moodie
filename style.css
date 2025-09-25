@@ -268,36 +268,34 @@ ul#entries small {
 
 /* Entries list mobile optimization */
 @media (max-width: 480px) {
-  ul#entries {
-    max-height: 250px;
-  }
-  
   ul#entries li {
-    padding: 0.8em;
-    gap: 0.6em;
-    flex-direction: column;
-    align-items: stretch;
+    padding: 0.7em;
+    gap: 0.5em;
+    /* Keep horizontal layout like desktop */
+    flex-direction: row;
+    align-items: center;
   }
   
   .entry-content {
-    gap: 0.25em;
-    text-align: center;
+    gap: 0.2em;
+    text-align: left;
+    flex: 1;
   }
   
   .delete-btn {
-    width: 100%;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 6px;
-    margin-top: 0.5em;
-    font-size: 14px;
+    font-size: 12px;
+    flex-shrink: 0;
   }
   
   ul#entries li b {
-    font-size: 1.1em;
+    font-size: 1em;
   }
   
   ul#entries small {
-    font-size: 0.85em;
+    font-size: 0.8em;
   }
 }
 
