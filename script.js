@@ -36,7 +36,7 @@ document.getElementById('moodForm').addEventListener('submit', async (e) => {
   const note = document.getElementById('note').value.trim();
   
   if (!mood) {
-    alert('Please select a mood 😊');
+    showMoodModal();
     return;
   }
 
@@ -166,9 +166,36 @@ async function confirmDeleteEntry() {
 // Make delete function globally available
 window.deleteEntry = deleteEntry;
 
+// Mood Selection Modal Functions
+function showMoodModal() {
+  const modal = document.getElementById('moodModal');
+  modal.style.display = 'flex';
+  
+  // Trigger animation after display is set
+  setTimeout(() => {
+    modal.classList.add('show');
+  }, 10);
+  
+  // Focus the OK button for accessibility
+  setTimeout(() => {
+    document.getElementById('okMood').focus();
+  }, 300);
+}
+
+function hideMoodModal() {
+  const modal = document.getElementById('moodModal');
+  modal.classList.remove('show');
+  
+  // Hide modal after animation
+  setTimeout(() => {
+    modal.style.display = 'none';
+  }, 300);
+}
+
 // Modal event listeners
 document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('deleteModal');
+  // Delete modal elements
+  const deleteModal = document.getElementById('deleteModal');
   const cancelBtn = document.getElementById('cancelDelete');
   const confirmBtn = document.getElementById('confirmDelete');
 
@@ -178,17 +205,36 @@ document.addEventListener('DOMContentLoaded', () => {
   // Confirm button
   confirmBtn.addEventListener('click', confirmDeleteEntry);
   
-  // Click outside to close
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
+  // Click outside to close delete modal
+  deleteModal.addEventListener('click', (e) => {
+    if (e.target === deleteModal) {
       hideDeleteModal();
     }
   });
+
+  // Mood modal elements
+  const moodModal = document.getElementById('moodModal');
+  const okBtn = document.getElementById('okMood');
+
+  // OK button for mood modal
+  okBtn.addEventListener('click', hideMoodModal);
+
+  // Click outside to close mood modal
+  moodModal.addEventListener('click', (e) => {
+    if (e.target === moodModal) {
+      hideMoodModal();
+    }
+  });
   
-  // Escape key to close
+  // Escape key to close modals
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && currentDeleteId) {
-      hideDeleteModal();
+    if (e.key === 'Escape') {
+      if (currentDeleteId) {
+        hideDeleteModal();
+      }
+      if (moodModal.classList.contains('show')) {
+        hideMoodModal();
+      }
     }
   });
 });
